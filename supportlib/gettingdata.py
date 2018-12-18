@@ -4,18 +4,16 @@ def kaggle(path = None):
     if(path == None):
         from google.colab import files
         files.upload()
-        !pip install -q kaggle
         a = os.getcwd()
         os.mkdir("kaggle")
-        b = os.join(a,"kaggle.json")
-        c = os.join(a,kaggle)
+        b = os.path.join(a,"kaggle.json")
+        c = os.path.join(a,kaggle)
         shutil.copyfile(b,c)
         os.chmod("./kaggle/kaggle.json", 600)
     else:
-        !pip install -q kaggle
         os.mkdir("kaggle")
-        b = os.join(path,"kaggle.json")
+        b = os.path.join(path,"kaggle.json")
         a = os.getcwd()
-        c = os.join(a,kaggle)
+        c = os.path.join(a,kaggle)
         shutil.copyfile(b,c)
         os.chmod("./kaggle/kaggle.json", 600)        
