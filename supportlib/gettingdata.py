@@ -1,19 +1,33 @@
 import os
+os.system("pip install wget requests")
+os.system("pip install -q kaggle")
 import shutil
-def kaggle(path = None):
-    if(path == None):
-        from google.colab import files
-        files.upload()
-        a = os.getcwd()
-        os.mkdir("kaggle")
-        b = os.path.join(a,"kaggle.json")
-        c = os.path.join(a,kaggle)
-        shutil.copyfile(b,c)
-        os.chmod("./kaggle/kaggle.json", 600)
+import requests
+import wget
+import tarfile
+import zipfile
+def zipextract(src,des=None):
+    if(des == None):
+        zip_ref = zipfile.ZipFile(src, 'r')
+        zip_ref.extractall(os.getcwd())
+        zip_ref.close()
     else:
-        os.mkdir("kaggle")
-        b = os.path.join(path,"kaggle.json")
-        a = os.getcwd()
-        c = os.path.join(a,kaggle)
-        shutil.copyfile(b,c)
-        os.chmod("./kaggle/kaggle.json", 600)        
+        zip_ref = zipfile.ZipFile(src, 'r')
+        zip_ref.extractall(des)
+        zip_ref.close()
+    os.remove(src)
+def tarextract(src):
+    tar = tarfile.open(src)
+    tar.extractall()
+    tar.close()
+def download(url,path= None):
+    if(path==None):
+        wget.download(url,os.getcwd())
+    else:
+        wget.download(url,path)
+def kaggle():
+    from google.colab import files
+    files.upload()
+    os.system("mkdir -p ~/.kaggle")
+    os.system("cp kaggle.json ~/.kaggle/")
+    os.system("chmod 600 ~/.kaggle/kaggle.json")
